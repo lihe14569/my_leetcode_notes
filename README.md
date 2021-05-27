@@ -1,34 +1,31 @@
-# My_leetcode_notes
+# My_Leetcode_Notes
 
-# Leetcode 题解
+## Preface
 
-## 前言
+Take notes on my daily leetcode problems.
+## Algorithm
 
-本文从 Leetcode 中精选大概 200 左右的题目，去除了某些繁杂但是没有多少算法思想的题目，同时保留了面试中经常被问到的经典题目。
+- [Two pointer](Leetcode%20题解%20-%20双指针.md)
+- [Sort](Leetcode%20题解%20-%20排序.md)
+- [Greedy](Leetcode%20题解%20-%20贪心思想.md)
+- [Binary Search](Leetcode%20题解%20-%20二分查找.md)
+- [Divide and Conquer](Leetcode%20题解%20-%20分治.md)
+- [Search](Leetcode%20题解%20-%20搜索.md)
+- [Dynamic Programming](Leetcode%20题解%20-%20动态规划.md)
+- [Math](Leetcode%20题解%20-%20数学.md)
 
-## 算法思想
+## Data Structure and More
 
-- [双指针](Leetcode%20题解%20-%20双指针.md)
-- [排序](Leetcode%20题解%20-%20排序.md)
-- [贪心思想](Leetcode%20题解%20-%20贪心思想.md)
-- [二分查找](Leetcode%20题解%20-%20二分查找.md)
-- [分治](Leetcode%20题解%20-%20分治.md)
-- [搜索](Leetcode%20题解%20-%20搜索.md)
-- [动态规划](Leetcode%20题解%20-%20动态规划.md)
-- [数学](Leetcode%20题解%20-%20数学.md)
-
-## 数据结构相关
-
-- [链表](Leetcode%20题解%20-%20链表.md)
-- [树](Leetcode%20题解%20-%20树.md)
-- [栈和队列](Leetcode%20题解%20-%20栈和队列.md)
-- [哈希表](Leetcode%20题解%20-%20哈希表.md)
-- [字符串](Leetcode%20题解%20-%20字符串.md)
-- [数组与矩阵](Leetcode%20题解%20-%20数组与矩阵.md)
-- [图](Leetcode%20题解%20-%20图.md)
-- [位运算](Leetcode%20题解%20-%20位运算.md)
+- [LinkedList](Leetcode%20题解%20-%20链表.md)
+- [Tree](Leetcode%20题解%20-%20树.md)
+- [Queue & Stack](Leetcode%20题解%20-%20栈和队列.md)
+- [HashTable](Leetcode%20题解%20-%20哈希表.md)
+- [String](Leetcode%20题解%20-%20字符串.md)
+- [Array/Matrix](Leetcode%20题解%20-%20数组与矩阵.md)
+- [Graph](Leetcode%20题解%20-%20图.md)
+- [Bitwise Operation](Leetcode%20题解%20-%20位运算.md)
 
 ## 参考资料
 
 - Leetcode
-- 
+- Cyc2018 Leetcode题解
