@@ -2,7 +2,7 @@
 
 ## Preface
 
-Take notes on my daily leetcode problems.
+Take notes on my daily leetcode problems.MD template credits to Cyc2018.
 ## Algorithm
 
 - [Two pointer](Leetcode%20题解%20-%20双指针.md)
