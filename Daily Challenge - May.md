@@ -1,0 +1,76 @@
+  # Daily Challenge solution - May
+
+<!-- GFM-TOC -->
+- [Daily Challenge solution - May](#daily-challenge-solution---may)
+      - [05/27/2021 318. Maximum Product of Word Lengths(Medium)](#05272021-318-maximum-product-of-word-lengthsmedium)
+<!-- GFM-TOC -->
+
+
+#### 05/27/2021 [318. Maximum Product of Word Lengths(Medium)](https://leetcode.com/problems/maximum-product-of-word-lengths/)
+
+```html
+Input is string array with different words, write a function that return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters.
+```
+
+Two methods are shown in here, the difference between two methods are in helper function noCommonletters().
+
+**Solution1: Brute force**
+
+```html
+class Solution {
+    public int maxProduct(String[] words) {
+        //Method1: brute force
+        int res = 0;
+        for(int i = 0; i < words.length; i++) {
+            for(int j = i + 1; j < words.length; j++) {
+                if(noCommonLetters(words[i], words[j])) {
+                    res = Math.max(res, words[i].length() * words[j].length());
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean noCommonLetters(String s1, String s2) {
+        //Check characters from two string one by one.
+        for(char c : s1.toCharArray()) {
+            if(s2.indexOf(c) != -1) return false;
+        }
+        return true;
+    }
+}
+```
+Time Complexity: **_O(n^2 \* l1\* l2)_**, where n is the number of words, l1,l2 are the length of two words for noCommonLetters() function.
+Space Complexity: **_O(1)_**
+
+**Solution2: Bitmask + precomputation**
+
+```html
+class Solution {
+    public int maxProduct(String[] words) {
+        int max = 0;
+        int n = words.length;
+        int[] bitMap = new int[n];
+        int[] lens = new int[n];
+        
+        for(int i = 0; i < n; i++) {
+            int bitmask = 0;
+            for(char c : words[i].toCharArray()) {
+                int shiftNum = c - 'a';
+                bitmask |= 1 << shiftNum;
+            }
+            bitMap[i] = bitmask;
+            lens[i] = words[i].length();
+        }
+        
+        for(int i = 0; i < words.length; i++) {
+            int bitmask = 0;
+            for(int j = i + 1; j < words.length; j++) {
+                if((bitMap[i] & bitMap[j]) == 0)
+                    max = Math.max(max, lens[i] * lens[j]);
+            }
+        }
+        return max;
+    }
+}
+```
