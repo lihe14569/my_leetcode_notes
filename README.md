@@ -27,7 +27,7 @@ Take notes on my daily leetcode problems.MD template credits to Cyc2018.
 
 ## Daily Challenge
 
-- [May 2021](Daily%Challenge%2-%2May.md)
+- [May 2021](Daily%Challenge%-%May.md)
 
 ## Reference
 
