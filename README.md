@@ -5,7 +5,7 @@
 Take notes on my daily leetcode problems.MD template credits to Cyc2018.
 ## Algorithm
 
-- [Two pointer](Leetcode%20题解%20-%20双指针.md)
+- [Two pointer](LC-TwoPointer.md)
 - [Sort](Leetcode%20题解%20-%20排序.md)
 - [Greedy](Leetcode%20题解%20-%20贪心思想.md)
 - [Binary Search](Leetcode%20题解%20-%20二分查找.md)
