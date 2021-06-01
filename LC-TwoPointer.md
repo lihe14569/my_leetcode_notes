@@ -5,6 +5,7 @@
     - [633. Sum of Square Numbers (Easy)](#633-sum-of-square-numbers-easy)
   - [345. Reverse Vowels of a String (Easy)](#345-reverse-vowels-of-a-string-easy)
   - [680. Valid Palindrome II (Easy)](#680-valid-palindrome-ii-easy)
+  - [1695. Maximum Erasure Value](#1695-maximum-erasure-value)
 <!-- GFM-TOC -->
 
 Two pointer method is an effective algorithm to find target/pair in array/list data strucure.
@@ -138,7 +139,40 @@ class Solution {
     }
 }
 ```
-Time complexity: **_O(N)_**  
-Space complexity: **_O(1)_*
+Time complexity: **_O(N)_**
+Space complexity: **_O(1)_**
 
+
+## [1695. Maximum Erasure Value](https://leetcode.com/problems/maximum-erasure-value/)
+
+```java
+Input: (int[]) integer array nums
+Output: (int) Return the maximum score you can get by erasing exactly one subarray.
+```
+
+Solution:
+
+```java
+class Solution {
+    public int maximumUniqueSubarray(int[] nums) {
+        int res = 0;
+        int currSum = 0;
+        Set<Integer> set = new HashSet<>();
+        int start = 0;
+        for(int end = 0; end < nums.length; end++) {
+            while(set.contains(nums[end])) {
+                set.remove(nums[start]);
+                currSum -= nums[start];
+                start++;
+            }
+            set.add(nums[end]);
+            currSum += nums[end];
+            res = Math.max(res, currSum);
+        }
+        return res;
+    }
+}
+```
+Time complexity: **_O(N)_**
+Space complexity: **_O(N)_**
 
