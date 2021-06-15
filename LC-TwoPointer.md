@@ -5,6 +5,9 @@
     - [633. Sum of Square Numbers (Easy)](#633-sum-of-square-numbers-easy)
   - [345. Reverse Vowels of a String (Easy)](#345-reverse-vowels-of-a-string-easy)
   - [680. Valid Palindrome II (Easy)](#680-valid-palindrome-ii-easy)
+  - [88. Merge Sorted Array](#88-merge-sorted-array)
+  - [141. Linked List Cycle](#141-linked-list-cycle)
+  - [524. Longest Word in Dictionary through Deleting](#524-longest-word-in-dictionary-through-deleting)
   - [1695. Maximum Erasure Value](#1695-maximum-erasure-value)
   - [42. Trapping Rain Water](#42-trapping-rain-water)
 - [Sliding window + Substring problems](#sliding-window--substring-problems)
@@ -152,6 +155,115 @@ class Solution {
 ```
 Time complexity: **_O(N)_**
 Space complexity: **_O(1)_**
+
+## [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
+
+```
+Input:(int[], int[]) Given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+Condition: Be stored inside the array nums1, change the array in-place
+. 
+Output:Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+```
+
+Solution:
+
+```java
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        //merge sort
+        int idx1 = m - 1, idx2 = n - 1;
+        for(int i = m + n - 1; i >= 0; i--) {
+            if(idx2 < 0) break;
+            if(idx1 >= 0 && nums1[idx1] > nums2[idx2])
+                nums1[i] = nums1[idx1--];
+            else
+                nums1[i] = nums2[idx2--];
+        }
+    }
+}
+```
+
+Time complexity: **O(N)**
+Space complexity: **O(1)**
+
+When solve an array problem in-place, consider the possibility of iterating backwards instead of forwards through the array.
+
+## [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)
+
+```
+Input: (ListNode) Given head, the head of a linked list 
+Output: (Boolean) Determine if the linked list has a cycle in it.
+```
+
+Solution:
+```java
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+}
+```
+
+Time compleixity: **O(N)** Space complexity: **O(1)**
+
+## [524. Longest Word in Dictionary through Deleting](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/description/)
+
+```
+Input: (String, List<String>) Given a string s and a string array dictionary, 
+
+Output: (String) Return the longest string in the dictionary that can be formed by deleting some of the given string characters. If there is more than one possible result, return the longest word with the smallest lexicographical order. If there is no possible result, return the empty string.
+```
+
+Note: 
+1. Use two pointer method to check if a string in the list is the substring of target string.
+2. If it is, check if it is longer than maxLength or same length with the smallest lexicographical order. Update the maxLength string
+3. findSubstring helper function is very useful and worth to remember for finding substring by deleting characters.(*)
+
+
+Solution:
+```java
+class Solution {
+    public String findLongestWord(String s, List<String> dictionary) {
+        String maxLen = "";
+        for(String str : dictionary) {
+            if(findSubstring(s, str)) {
+                if(str.length() > maxLen.length() || str.length() == maxLen.length() && str.compareTo(maxLen) < 0)
+                    maxLen = str;
+            }
+        }
+        return maxLen;
+    }
+    private boolean findSubstring(String s, String str) {
+        int j = 0;
+        for(int i = 0; i < s.length() && j < str.length(); i++) {
+            if(s.charAt(i) == str.charAt(j))
+                j++;
+        }
+        return j == str.length();
+    }
+}
+```
+Time complexity: **O(N * K)** where N is the number of strings in the list, and K is the length of target string.
+Space complexity: **O(1)**
+
 
 
 ## [1695. Maximum Erasure Value](https://leetcode.com/problems/maximum-erasure-value/)
