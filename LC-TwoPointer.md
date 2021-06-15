@@ -8,8 +8,10 @@
   - [88. Merge Sorted Array](#88-merge-sorted-array)
   - [141. Linked List Cycle](#141-linked-list-cycle)
   - [524. Longest Word in Dictionary through Deleting](#524-longest-word-in-dictionary-through-deleting)
-  - [1695. Maximum Erasure Value](#1695-maximum-erasure-value)
+- [High frequency problems](#high-frequency-problems)
   - [42. Trapping Rain Water](#42-trapping-rain-water)
+  - [15. 3Sum](#15-3sum)
+  - [1695. Maximum Erasure Value](#1695-maximum-erasure-value)
 - [Sliding window + Substring problems](#sliding-window--substring-problems)
   - [3. Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters)
   - [159. Longest Substring with At Most Two Distinct Characters](#159-longest-substring-with-at-most-two-distinct-characters)
@@ -264,7 +266,120 @@ class Solution {
 Time complexity: **O(N * K)** where N is the number of strings in the list, and K is the length of target string.
 Space complexity: **O(1)**
 
+# High frequency problems
+## [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
+```
+Input: (int[]) n non-negative integers representing an elevation map where the width of each bar is 1.
+Output: (int)Compute how much water it can trap after raining.
+```
+
+Solution:
+
+```java
+class Solution {
+    public int trap(int[] height) {
+        //TWO POINTERS
+        int leftIdx = 0, rightIdx = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        int volume = 0;
+        while(leftIdx <= rightIdx) {
+            leftMax = Math.max(leftMax, height[leftIdx]);
+            rightMax = Math.max(rightMax, height[rightIdx]);
+            if(leftMax <= rightMax) {
+                volume += leftMax - height[leftIdx++];
+            }
+            else {
+                volume += rightMax - height[rightIdx--];
+            }
+        }
+        return volume;
+    }
+}
+```
+Time Complexity: **O(N)**
+Space Complexity:**O(1)**
+
+## [15. 3Sum](https://leetcode.com/problems/3sum/)
+
+```
+Input: (int[]) Given an integer array nums.
+
+Output: (List<List<Integer>>) Return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+```
+Note:  
+   1. To use two pointer method, the array need to be sorted first, then iterate through the array, if the curren number is greater than zero, break, since in ascending order, the first number in triplets should always be negative so that the sum of three could be zero.
+   2. If current value is negative and previous value is not same(non-duplicate), then we can use two pointer method applied on two sum problem to find targeted pairs.
+   3. In the two sum helper function, if we found the low and high value, we added to results list, make sure that increment low and decrease high pointers by 1. Check if current low pointer has duplicate(same value as previous low), then increase to a unique low value.
+   4. One thing, if the 3Sum problem change sume equals to k, then when we iterate thought the array, termination is current value greater than k.
+   5. Other approaches such as **hashset** and **no-sort** are also shown in the following setction.
+   
+Solution(Two pointers): 
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        //ensure the array is sorted first
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i = 0; i < nums.length && nums[i] <= 0; i++) {
+            if(i == 0 || nums[i - 1] != nums[i]) {
+                twoSum(nums, i, res);
+            }
+        }
+        return res;
+    }
+    public void twoSum(int[] nums, int i, List<List<Integer>> res) {
+        int lo = i + 1, hi = nums.length - 1;
+        while(lo < hi) {
+            int sum = nums[i] + nums[lo] + nums[hi];
+            if(sum < 0)
+                lo++;
+            else if(sum > 0)
+                hi--;
+            else {
+                res.add(Arrays.asList(nums[i], nums[lo++], nums[hi--]));
+                //avoid duplicate answer
+                while(lo < hi && nums[lo] == nums[lo - 1])
+                    lo++;
+            }
+        }
+    }
+}
+```
+Time complexity: **O(N^2)** inner loop(two sum helper function) is O(N), and we iterate over the array, which take N times, So it is O(N^2).
+We also sort the array at first, so it takes O(N* log(N)), so time complexity is O(N^2 + N* log(N)) = **O(N^2)**
+Space complexity: **O(1)** **>> NOT SURE <<**
+
+Solution2(Hashset):
+
+main method is same as two pointers, the only difference is two sum helper function.
+
+```java
+public void twoSum(int[] nums, int i, List<List<Integer>> res) {
+        //HashSet method
+        Set<Integer> set = new HashSet<>();
+        for(int j = i + 1; j < nums.length; j++) {
+            int complement = -nums[i] - nums[j];
+            if(set.contains(complement)) {
+                res.add(Arrays.asList(nums[i], nums[j], complement));
+                //the following termination condition ensure nums[j] is still same value, we just move to the right most duplicate.
+                while(j  + 1 < nums.length && nums[j] == nums[j + 1])
+                    j++;
+            }
+            //nums[j] has same value as the left-most duplicate.
+            set.add(nums[j]);
+        }
+    }
+```
+
+Time complexity: **O(N^2)**
+Space complexity: 
+
+Solution3(No-sort):
+
+If the interviewer ask not to modify the origina array(sorting is not allowed).
 
 ## [1695. Maximum Erasure Value](https://leetcode.com/problems/maximum-erasure-value/)
 
@@ -299,38 +414,7 @@ class Solution {
 Time complexity: **_O(N)_**
 Space complexity: **_O(N)_**
 
-## [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
-```
-Input: (int[]) n non-negative integers representing an elevation map where the width of each bar is 1.
-Output: (int)Compute how much water it can trap after raining.
-```
-
-Solution:
-
-```java
-class Solution {
-    public int trap(int[] height) {
-        //TWO POINTERS
-        int leftIdx = 0, rightIdx = height.length - 1;
-        int leftMax = 0, rightMax = 0;
-        int volume = 0;
-        while(leftIdx <= rightIdx) {
-            leftMax = Math.max(leftMax, height[leftIdx]);
-            rightMax = Math.max(rightMax, height[rightIdx]);
-            if(leftMax <= rightMax) {
-                volume += leftMax - height[leftIdx++];
-            }
-            else {
-                volume += rightMax - height[rightIdx--];
-            }
-        }
-        return volume;
-    }
-}
-```
-Time Complexity: O(N)
-Space Complexity: O(1)
 
 
 
