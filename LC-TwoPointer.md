@@ -11,6 +11,9 @@
 - [High frequency problems](#high-frequency-problems)
   - [42. Trapping Rain Water](#42-trapping-rain-water)
   - [15. 3Sum](#15-3sum)
+  - [16. 3Sum Closest](#16-3sum-closest)
+  - [259. 3Sum Smaller](#259-3sum-smaller)
+- [Daily challenge](#daily-challenge)
   - [1695. Maximum Erasure Value](#1695-maximum-erasure-value)
 - [Sliding window + Substring problems](#sliding-window--substring-problems)
   - [3. Longest Substring Without Repeating Characters](#3-longest-substring-without-repeating-characters)
@@ -379,7 +382,147 @@ Space complexity:
 
 Solution3(No-sort):
 
-If the interviewer ask not to modify the origina array(sorting is not allowed).
+If the interviewer ask not to modify the origina array(sorting is not allowed). We need to use hashset/hashtable to avoid duplicates.
+
+Solution:
+
+```java
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        //NO SORT + HASHSET+ HASHTABLE
+        //result list initiated as hashset
+        Set<List<Integer>> res = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++) {
+            //if we successfully add it to set, which means curren number is unique
+            if(set.add(nums[i])) {
+                for(int j = i + 1; j < nums.length; j++) {
+                    int complement = - nums[i] - nums[j];
+                    if(map.containsKey(complement) && map.get(complement) == i) {
+                        List<Integer> list = Arrays.asList(nums[i], nums[j], complement);
+                        Collections.sort(list);
+                        res.add(list);
+                    }
+                    map.put(nums[j], i);
+                }
+            }
+        }
+        return new ArrayList(res);
+    }
+}
+```
+Time complexity: **O(N^2)**
+Space complexity: **O(N)**
+
+## [16. 3Sum Closest](https://leetcode.com/problems/3sum-closest/)
+
+```
+Input: (int[], int)Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. 
+Output: (int) Return the sum of the three integers. You may assume that each input would have exactly one solution.
+```
+
+Solution:
+
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int diff = Integer.MAX_VALUE;
+        int n = nums.length;
+        for(int i = 0; i < n && diff != 0; i++) {
+            int lo = i + 1, hi = n - 1;
+            while(lo < hi) {
+                int sum = nums[i] + nums[lo] + nums[hi];
+                if(Math.abs(target - sum) < Math.abs(diff))
+                    diff = target - sum;
+                if(sum < target)
+                    lo++;
+                else
+                    hi--;
+            }
+        }
+        return target - diff;
+    }
+}
+```
+
+TC: **O(N)**  
+SC: **O(log N)** OR **O(N)** depends on the sorting algorithm
+
+
+Solution2(sort + binary search):
+
+Notes:
+1.  Arrays.binarySearch() index of the search key, if it is contained in the array; otherwise, **(-(insertion point) – 1)**. 
+2.  Check both high and low insertation points after binary search.
+   
+```java
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int diff = Integer.MAX_VALUE;
+        int n = nums.length;
+        Arrays.sort(nums);
+        for (int i = 0; i < n && diff != 0; i++) {
+            for (int j = i + 1; j < n - 1; j++) {
+                int complement = target - nums[i] - nums[j];
+                int idx = Arrays.binarySearch(nums, j + 1, n - 1, complement);
+                int hi = idx >= 0 ? idx : -idx - 1, lo = hi - 1;
+                if (hi < n && Math.abs(complement - nums[hi]) < Math.abs(diff))
+                    diff = complement - nums[hi];
+                if (lo > j && Math.abs(complement - nums[lo]) < Math.abs(diff))
+                    diff = complement - nums[lo];
+            }
+        }
+    return target - diff;
+    }
+}
+```
+Time complexity: O(N^2 * logN)
+Space complexity: O(log N) OR O(N)
+
+## [259. 3Sum Smaller](https://leetcode.com/problems/3sum-smaller/)
+
+
+```
+Input: (int[], int) Given an array of n integers nums and an integer target.
+
+Output: find the number of index triplets i, j, k with 0 <= i < j < k < n that satisfy the condition nums[i] + nums[j] + nums[k] < target.
+```
+
+Solution1(sort + two pointers):
+
+```java
+class Solution {
+    public int threeSumSmaller(int[] nums, int target) {
+        //two pointers
+        int res = 0;
+        int n = nums.length;
+        Arrays.sort(nums);
+        for(int i = 0; i < n; i++) {
+            int lo = i + 1, hi = nums.length - 1;
+            while(lo < hi) {
+                int sum = nums[i] + nums[lo] + nums[hi];
+                if(sum < target) {
+                    res += hi - lo;
+                    lo++;
+                }   
+                else
+                    hi--;
+            }
+        }
+        return res;  
+    }       
+}
+```
+Time complexity:  **O(N^2)**
+Space complexity: **O(N)** OR **O(log N)**
+
+Solution2(sort + binary search):
+
+
+ 
+# Daily challenge
 
 ## [1695. Maximum Erasure Value](https://leetcode.com/problems/maximum-erasure-value/)
 

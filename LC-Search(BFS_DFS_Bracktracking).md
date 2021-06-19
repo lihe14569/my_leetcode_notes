@@ -1,11 +1,81 @@
 # LC - Search(BFS, DFS and Backtracking)
 
 - [LC - Search(BFS, DFS and Backtracking)](#lc---searchbfs-dfs-and-backtracking)
-- [51. N-Queens(Hard)](#51-n-queenshard)
+- [DFS](#dfs)
+  - [270. Closest Binary Search Tree Value](#270-closest-binary-search-tree-value)
+  - [51. N-Queens(Hard)](#51-n-queenshard)
+
+
+# DFS
+
+## [270. Closest Binary Search Tree Value](https://leetcode.com/problems/closest-binary-search-tree-value/)
+
+```
+Input: (TreeNode, double)Given the root of a binary search tree and a target value.
+Output:(int) Return the value in the BST that is closest to the target.
+```
+
+Solution:
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int res = 0;
+    double min = Double.MAX_VALUE;
+    public int closestValue(TreeNode root, double target) {
+        //dfs
+        dfs(root, target);
+        return res;
+    }
+    public void dfs(TreeNode root, double target) {
+        //base case
+        if(root == null) return;
+        if(Math.abs(root.val - target) < min) {
+            min = Math.abs(root.val - target);
+            res = root.val;
+        }
+        if(root.val > target) 
+            dfs(root.left, target);
+        else
+            dfs(root.right, target);
+    }
+}
+```
+Time complexity: **O(h)**, where h is the height of BST
+Space complexity: O(1)
 
 
 
-# [51. N-Queens(Hard)](https://leetcode.com/problems/n-queens/)
+
+## [51. N-Queens(Hard)](https://leetcode.com/problems/n-queens/)
 
 ```java
 Input:(int) n, the size of 2d-matrix is  n x n.
