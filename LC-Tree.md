@@ -11,6 +11,7 @@
   - [108. Convert Sorted Array to Binary Search Tree](#108-convert-sorted-array-to-binary-search-tree)
   - [1382. Balance a Binary Search Tree](#1382-balance-a-binary-search-tree)
   - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
+  - [95. Unique Binary Search Trees II](#95-unique-binary-search-trees-ii)
 
 # Binary Search Tree(BST)
 
@@ -547,5 +548,88 @@ class Solution {
 }
 ```
 
-Time complexity: **O(N^2)**
+Time complexity: **O(N^2)**  
+The recurrence Tree for n = 4:
+```java
+                                g(4)
+                        /      |       |       \
+                g(0)*g(3)  g(1)*g(2) g(2)*g(1) g(3)*g(1)  // 4
+            /      |     \
+    g(0)*g(2) g(1)*g(1) g(2)*g(2)                         //3
+    /       \
+g(0)*g(1)  g(1)*g(0)                                      //2
+```
+For the left most node, we use integer array to memorize calculated number of BST from 1 to N, which takes O(N).  
+For each level, we need to do the production,which takes 2 + 3 + ... + N = O(N^2), so the total time complexity is O(N^2 + N) = O(N^2)  
 
+Space complexity: **O(N)** for the call stack
+
+
+Solution2: Dynamic programming
+
+```java
+class Solution {
+    public int numTrees(int n) {
+        //DP
+        int[] G = new int[n + 1];
+        G[0] = 1;
+        G[1] = 1;
+        
+        for(int i = 2; i <= n; i++) {
+            for(int j = 1; j <= i; j++) {
+                G[i] += G[j - 1] * G[i - j];
+            }
+        }
+        return G[n];
+    }
+}
+```
+
+Time complexity: **O(N^2)**
+Space complexity: **O(N)**
+
+## [95. Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/)
+
+```
+Input: (int)Given an integer n.
+
+Output:(List<TreeNode>) Return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+```
+
+Solution: DFS + BST traversal
+
+```java
+class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        List<TreeNode> res = new ArrayList<>();
+        res = helper(1, n);
+        return res;
+    }
+    public List<TreeNode> helper(int start, int end) {
+        List<TreeNode> res = new ArrayList<>();
+        if(start > end) res.add(null);
+        for(int i = start; i <= end; i++) {
+            List<TreeNode> leftList = helper(start, i - 1);
+            List<TreeNode> rightList = helper(i + 1, end);
+            for(TreeNode left : leftList) {
+                for(TreeNode right : rightList) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = left;
+                    root.right = right;
+                    res.add(root);
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+Time compleixity: **O(4^N / (N^(1/2)))** (Catalan Number)
+Space complexity: **O(4^N / (N^(1/2)))** 
+
+Summary:
+
+1. Master BST inorder traversal(recursive + iterative)
+2. Master the basic BST operations(search, delete and add)
+3. Be familiar and comfortable with BST Iterator(always remember the default methods hasNext() and next())
