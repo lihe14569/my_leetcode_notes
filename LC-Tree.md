@@ -8,6 +8,9 @@
   - [173. Binary Search Tree Iterator](#173-binary-search-tree-iterator)
   - [426. Convert Binary Search Tree to Sorted Doubly Linked List](#426-convert-binary-search-tree-to-sorted-doubly-linked-list)
   - [99. Recover Binary Search Tree](#99-recover-binary-search-tree)
+  - [108. Convert Sorted Array to Binary Search Tree](#108-convert-sorted-array-to-binary-search-tree)
+  - [1382. Balance a Binary Search Tree](#1382-balance-a-binary-search-tree)
+  - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
 
 # Binary Search Tree(BST)
 
@@ -376,7 +379,7 @@ Time complexity: O(N)
 Space complexity: O(N)
 
 Note:
-when we visite current node and check if it is inversed, we can two options.
+when we visit current node and check if it is inversed, we can intiate prev variable in two ways.
 
 1. Initiate TreeNode prev as Integer.MIN_VALUE
 
@@ -433,10 +436,116 @@ Time complexity: O(N)
 Space complexity: O(N)
 
 
-Follow up: A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+Follow up: A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?  
+Answer: **Morris Trasversal**
 
 
+## [108. Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+
+```
+Input: (int[])Given an integer array nums where the elements are sorted in ascending order.
+
+Output: (TreeNode) Convert it to a height-balanced binary search tree.
+
+A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+```
+
+Solution:
+
+```java
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }
+    public TreeNode helper(int[] nums, int start, int end) {
+        if(start > end) return null;
+        //left mid point
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = helper(nums, start, mid - 1);
+        root.right = helper(nums, mid + 1, end);
+        return root;
+    }
+}
+```
+Time complexity: O(N)
+Space complexity: O(N)
 
 
+## [1382. Balance a Binary Search Tree](https://leetcode.com/problems/balance-a-binary-search-tree/)
 
+
+```
+Input: (TreeNode) Given a binary search tree, 
+
+Output: (TreeNode) Return a balanced binary search tree with the same node values.
+
+A binary search tree is balanced if and only if the depth of the two subtrees of every node never differ by more than 1.
+
+If there is more than one answer, return any of them.
+```
+
+Solution(BST -> sorted numbers -> BST):
+
+```java
+class Solution {
+    List<Integer> list;
+    public TreeNode balanceBST(TreeNode root) {
+        //same as 108, two pass method
+        list = new ArrayList<>();
+        inorder(list, root);
+        return buildBST(list, 0, list.size() - 1);
+    }
+    public TreeNode buildBST(List<Integer> list, int start, int end) {
+        //base case
+        if(start > end) return null;
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(list.get(mid));
+        root.left = buildBST(list, start, mid - 1);
+        root.right = buildBST(list, mid + 1, end);
+        return root;
+    }
+    public void inorder(List<Integer> list, TreeNode root) {
+        //base case
+        if(root == null) return;
+        inorder(list, root.left);
+        list.add(root.val);
+        inorder(list, root.right);
+    }
+}
+```
+
+Time complexity: O(N)
+Space complexity: O(N)
+
+
+## [96. Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/)
+
+```
+Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+```
+
+Solution1: Recursive
+
+```java
+class Solution {
+    public int numTrees(int n) {
+        //recursive method + memo
+        Integer[] memo = new Integer[n + 1];
+        return dfs(n, memo);
+    }
+    public int dfs(int num, Integer[] memo) {
+        //base case
+        if(num == 0 || num == 1) return 1;
+        if(memo[num] != null) return memo[num];
+        int sum = 0;
+        for(int i = 1; i <= num; i++) {
+            sum += dfs(i - 1, memo) * dfs(num - i, memo);
+        }
+        return memo[num] = sum;
+    }
+}
+```
+
+Time complexity: **O(N^2)**
 
