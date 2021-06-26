@@ -628,8 +628,11 @@ class Solution {
 Time compleixity: **O(4^N / (N^(1/2)))** (Catalan Number)
 Space complexity: **O(4^N / (N^(1/2)))** 
 
-Summary:
+
+
+**Summary:**
 
 1. Master BST inorder traversal(recursive + iterative)
 2. Master the basic BST operations(search, delete and add)
 3. Be familiar and comfortable with BST Iterator(always remember the default methods hasNext() and next())
+
