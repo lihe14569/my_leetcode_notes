@@ -1,6 +1,10 @@
 # LC - Tree
-
+Almost all problems of the problems are summerized by [古城算法](https://www.youtube.com/c/%E5%8F%A4%E5%9F%8E%E7%AE%97%E6%B3%95)
+根据城主的分类算法笔记
 - [LC - Tree](#lc---tree)
+- [1. Tree Traversal](#1-tree-traversal)
+  - [144. Binary Tree Preorder Traversal](#144-binary-tree-preorder-traversal)
+  - [94. Binary Tree Inorder Traversal](#94-binary-tree-inorder-traversal)
 - [Binary Search Tree(BST)](#binary-search-treebst)
   - [270. Closest Binary Search Tree Value](#270-closest-binary-search-tree-value)
   - [450. Delete Node in a BST](#450-delete-node-in-a-bst)
@@ -12,7 +16,42 @@
   - [1382. Balance a Binary Search Tree](#1382-balance-a-binary-search-tree)
   - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
   - [95. Unique Binary Search Trees II](#95-unique-binary-search-trees-ii)
+# 1. Tree Traversal
+## [144. Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/)
 
+```
+Input: Given the root of a binary tree
+Output: return the preorder traversal of its nodes' values.
+```
+思路：preorder traversal,有用stack的iterative 的方法，也可以recursive.
+
+Solution : iterative using stack
+```java
+public List<Integer> preorderTraversal(TreeNode root) {
+        //preoder-iterative template 1
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> s = new Stack<>();
+        TreeNode curr = root;
+        while(curr != null || !s.isEmpty()) {
+            if(curr != null) {
+                res.add(curr.val);
+                s.push(curr);
+                curr = curr.left;
+            } else {
+                curr = s.pop();
+                curr = curr.right;
+            }
+        }
+        return res;
+    }
+```
+
+## [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+
+```
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+```
+solution: /
 # Binary Search Tree(BST)
 
 ```
