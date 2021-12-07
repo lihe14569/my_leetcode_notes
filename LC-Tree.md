@@ -5,7 +5,8 @@ Almost all problems of the problems are summerized by [古城算法](https://www
 - [1. Tree Traversal](#1-tree-traversal)
   - [144. Binary Tree Preorder Traversal](#144-binary-tree-preorder-traversal)
   - [94. Binary Tree Inorder Traversal](#94-binary-tree-inorder-traversal)
-- [Binary Search Tree(BST)](#binary-search-treebst)
+- [2. Serialize/Deserialize/Construct Tree](#2-serializedeserializeconstruct-tree)
+- [3. Binary Search Tree(BST)](#3-binary-search-treebst)
   - [270. Closest Binary Search Tree Value](#270-closest-binary-search-tree-value)
   - [450. Delete Node in a BST](#450-delete-node-in-a-bst)
   - [98. Validate Binary Search Tree](#98-validate-binary-search-tree)
@@ -16,6 +17,9 @@ Almost all problems of the problems are summerized by [古城算法](https://www
   - [1382. Balance a Binary Search Tree](#1382-balance-a-binary-search-tree)
   - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
   - [95. Unique Binary Search Trees II](#95-unique-binary-search-trees-ii)
+- [4. LCA of Binary Tree](#4-lca-of-binary-tree)
+
+
 # 1. Tree Traversal
 ## [144. Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/)
 
@@ -52,7 +56,8 @@ public List<Integer> preorderTraversal(TreeNode root) {
 Given the root of a binary tree, return the inorder traversal of its nodes' values.
 ```
 solution: /
-# Binary Search Tree(BST)
+# 2. Serialize/Deserialize/Construct Tree
+# 3. Binary Search Tree(BST)
 
 ```
 Basic operations: search in BST
@@ -674,4 +679,6 @@ Space complexity: **O(4^N / (N^(1/2)))**
 1. Master BST inorder traversal(recursive + iterative)
 2. Master the basic BST operations(search, delete and add)
 3. Be familiar and comfortable with BST Iterator(always remember the default methods hasNext() and next())
+
+# 4. LCA of Binary Tree
 
