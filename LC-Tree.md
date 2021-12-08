@@ -18,8 +18,8 @@ Almost all problems of the problems are summerized by [古城算法](https://www
   - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
   - [95. Unique Binary Search Trees II](#95-unique-binary-search-trees-ii)
 - [4. LCA of Binary Tree](#4-lca-of-binary-tree)
-  - [[235. Lowest Common Ancestor of a Binary Search Tree]](#235-lowest-common-ancestor-of-a-binary-search-tree)
-  - [[236. Lowest Common Ancestor of a Binary Tree]](#236-lowest-common-ancestor-of-a-binary-tree)
+  - [235. Lowest Common Ancestor of a Binary Search Tree](#235-lowest-common-ancestor-of-a-binary-search-tree)
+  - [236. Lowest Common Ancestor of a Binary Tree](#236-lowest-common-ancestor-of-a-binary-tree)
 
 
 # 1. Tree Traversal
@@ -654,7 +654,7 @@ Space complexity: **O(4^N / (N^(1/2)))**
 
 # 4. LCA of Binary Tree
 
-## [235. Lowest Common Ancestor of a Binary Search Tree]
+## 235. Lowest Common Ancestor of a Binary Search Tree
 
 ```
 Input:  binary search tree (BST), 
@@ -677,7 +677,7 @@ class Solution {
 }
 ```
 
-## [236. Lowest Common Ancestor of a Binary Tree]
+## 236. Lowest Common Ancestor of a Binary Tree
 
 描述
 
