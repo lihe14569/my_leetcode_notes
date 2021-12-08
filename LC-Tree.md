@@ -18,6 +18,8 @@ Almost all problems of the problems are summerized by [古城算法](https://www
   - [96. Unique Binary Search Trees](#96-unique-binary-search-trees)
   - [95. Unique Binary Search Trees II](#95-unique-binary-search-trees-ii)
 - [4. LCA of Binary Tree](#4-lca-of-binary-tree)
+  - [[235. Lowest Common Ancestor of a Binary Search Tree]](#235-lowest-common-ancestor-of-a-binary-search-tree)
+  - [[236. Lowest Common Ancestor of a Binary Tree]](#236-lowest-common-ancestor-of-a-binary-tree)
 
 
 # 1. Tree Traversal
@@ -74,21 +76,6 @@ Solution:
 
 
 ```java
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     int res = 0;
     double min = Double.MAX_VALUE;
@@ -135,21 +122,6 @@ If the node is found, delete the node.
 Solution:
 
 ```java
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
         if(root ==  null) return null;
@@ -681,4 +653,76 @@ Space complexity: **O(4^N / (N^(1/2)))**
 3. Be familiar and comfortable with BST Iterator(always remember the default methods hasNext() and next())
 
 # 4. LCA of Binary Tree
+
+## [235. Lowest Common Ancestor of a Binary Search Tree]
+
+```
+Input:  binary search tree (BST), 
+Output: the lowest common ancestor (LCA) of two given nodes in the BST.
+```
+思路：
+    
+    1. 如果p和q都在root的左子树上，那么LCA就在左子树
+    2. 如果p和q都在root的右子树，那么recursively call 右子树
+    3. 如果p和q各自一边，那么root就是LCA
+   
+code
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root.val > p.val && root.val > q.val) return lowestCommonAncestor(root.left, p, q);
+        if(root.val < p.val && root.val < q.val) return lowestCommonAncestor(root.right, p, q);
+        return root;
+    }
+}
+```
+
+## [236. Lowest Common Ancestor of a Binary Tree]
+
+描述
+
+```
+Input: binary tree
+Output: lowest common ancestor (LCA) of two given nodes in the tree.
+```
+
+思路：
+
+1. 初始一个hashmap和hashset，在遍历binary tree的时候记录parent和curr node的关系，key 为curr node, value 为 parent
+2. 当遍历完binary tree之后，从p出发，自底向上，直到p为空，向上过程中存储当前节点p到hashset里面
+3. 在从q出发，自底向上，向上过程中检查当前节点q是否在hashset里面，如果是，当前q即为LCA
+
+code
+```java
+class Solution {
+    Map<TreeNode, TreeNode> nodeToParent = new HashMap<>();
+    Set<TreeNode> set = new HashSet<>();
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || root == p || root == q) return root;
+        dfs(root);
+        while(p != null) {
+            set.add(p);
+            p = nodeToParent.get(p);
+        }
+        while(q != null) {
+            if(set.contains(q)) {
+                return q;
+            }
+            q = nodeToParent.get(q);
+        }
+        return null;
+    }
+    public void dfs(TreeNode root) {
+        if(root == null) return;
+        if(root.left != null) {
+            nodeToParent.put(root.left, root);
+            dfs(root.left);
+        }
+        if(root.right != null) {
+            nodeToParent.put(root.right, root);
+            dfs(root.right);
+        }
+    }
+}
+```
 
